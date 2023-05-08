@@ -41,6 +41,7 @@ Here's an example input JSON file:
 ### Output JSON Format
 
 The output JSON file will contain translated object
+
 Here's an example output JSON file:
 
 ```JSON
@@ -74,7 +75,6 @@ go get golang.org/x/text/language
 go get google.golang.org/api/option
 ```
 
-## Usage
 To run the program in development mode, run the following command:
 
 ```sh

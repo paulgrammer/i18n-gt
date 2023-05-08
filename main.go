@@ -166,6 +166,32 @@ func splitIntoArrays(strs []string, maxLen int) [][]string {
 	return result
 }
 
+func fileExists(filePath string) bool {
+	// Check if the file exists
+	_, err := os.Stat(filePath)
+	return err == nil
+}
+
+// getKeysNotInArray2 returns the keys in the first array that are not in the second array.
+// It takes two string arrays as arguments and returns a new slice of strings containing the keys that are not in the second array.
+func getKeysNotInArray2(arr1 []string, arr2 []string) []string {
+	// Create a map to hold the items in the second array
+	itemsInArray2 := make(map[string]bool)
+	for _, item := range arr2 {
+		itemsInArray2[item] = true
+	}
+
+	// Loop through the first array and add the keys that are not in the second array to a new slice
+	var result []string
+	for _, key := range arr1 {
+		if _, ok := itemsInArray2[key]; !ok {
+			result = append(result, key)
+		}
+	}
+
+	return result
+}
+
 func main() {
 	// Parse command-line arguments
 	inputFile := flag.String("input", "", "Path to the input JSON file")
@@ -180,12 +206,27 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Check if input file exists.
+	if !fileExists(*inputFile) {
+		fmt.Println("Failed to read input file.")
+		os.Exit(1)
+	}
+
 	input := readJson(*inputFile)
+	inputKeys := input.keys()
 	output := make(content)
 
+	// Check if output file exists.
+	if fileExists(*outputFile) {
+		output = readJson(*outputFile)
+		// Get only keys in the input file but not in the output file.
+		// skip translating again the whole file.
+		inputKeys = getKeysNotInArray2(input.keys(), output.keys())
+	}
+
 	// type.googleapis.com/google.rpc.BadRequest
-	// Number of text queries >  Maximum: 128
-	splitted := splitIntoArrays(input.keys(), 128)
+	// Number of text queries > Maximum: 128
+	splitted := splitIntoArrays(inputKeys, 128)
 
 	for i, keys := range splitted {
 		var values []string
@@ -207,6 +248,6 @@ func main() {
 		}
 	}
 
-	// save output
+	// Save output
 	output.save(*outputFile)
 }
