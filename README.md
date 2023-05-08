@@ -75,13 +75,7 @@ go get golang.org/x/text/language
 go get google.golang.org/api/option
 ```
 
-To run the program in development mode, run the following command:
-
-```sh
-make dev
-```
-
-To build the program, run the following command:
+To build the program for multiple platforms, run the following command:
 
 ```sh
 make build
@@ -89,10 +83,38 @@ make build
 
 This will compile the program and generate a binary file in the `build/` directory.
 
-To build a Linux binary, run the following command:
+To run the program in development mode, run the following command:
 
 ```sh
-make build-linux
+make dev
 ```
 
-This will compile the program for a Linux environment and generate a binary file in the `build/` directory.
+This will run the program with the `input.json` and `account.json` files provided and generate the `output.json` file.
+
+## Build Targets
+
+The `Makefile` provides the following build targets:
+
+- `build-linux-amd64`: Build the program for Linux x64
+- `build-linux-arm`: Build the program for Linux ARM
+- `build-darwin-amd64`: Build the program for macOS x64
+- `build-windows-amd64`: Build the program for Windows x64
+- `build`: Build the program for all platforms
+- `clean`: Clean up generated binary files
+
+Here's an example of how to build the program for a specific platform:
+
+```sh
+make build-linux-amd64
+```
+
+This will compile the program for Linux x64 and generate a binary file in the `build/` directory.
+
+## TODO
+
+- [ ] Set up GitHub release workflow to automate binary file creation and release management.
+
+
+### License
+
+This program is licensed under the MIT license. See the [LICENSE](https://opensource.org/licenses/MIT) file for details.
