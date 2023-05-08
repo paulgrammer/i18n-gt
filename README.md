@@ -96,3 +96,7 @@ make build-linux
 ```
 
 This will compile the program for a Linux environment and generate a binary file in the `build/` directory.
+
+### License
+
+This program is licensed under the MIT license. See the [LICENSE](https://opensource.org/licenses/MIT) file for details.

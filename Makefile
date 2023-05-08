@@ -11,4 +11,4 @@ dev:
 	export GOOGLE_APPLICATION_CREDENTIALS=account.json && go run main.go --input=input.json --output=output.json --source=en --target=pl
 
 build-linux:
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o $(BINARY_PATH) main.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o $(BINARY_PATH)-linux-amd64 main.go
